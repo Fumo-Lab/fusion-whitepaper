@@ -53,171 +53,295 @@ Kimi K3 & \textbf{93.5\%} & 30 & 46.0\% & \textbf{122}
 \end{tabular}
 \end{table}
 
-Figure~\ref{fig:observed-pareto} disaggregates the same results into native
-benchmark coordinates. Each panel plots reported score against full
-benchmark-run cost; no benchmark weighting or cross-benchmark normalization is
-introduced. Each panel uses a linear cost axis fitted to that benchmark's
-observed range, so equal horizontal distances represent equal cost differences
-within the panel. In every panel, the preferred direction is toward the upper
-left.
+Figure~\ref{fig:observed-pareto} places the focal comparisons from
+Table~\ref{tab:pareto} in a wider set of native benchmark coordinates. The
+additional reference points include models commonly used by customers before
+August 2026 and representative lower-cost operating points reported by
+Artificial Analysis \citep{artificialanalysis2026}. Each panel plots native
+benchmark score against full benchmark-run cost; no benchmark weighting or
+cross-benchmark normalization is introduced. The Banking and Terminal-Bench
+panels use linear cost axes. The GPQA panel uses a marked broken linear axis to
+give its dense \$0--40 region more space while preserving actual cost tick
+values. In every panel, the preferred direction is toward the upper left.
 
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[x=1cm,y=1cm,font=\sffamily\scriptsize]
   \tikzset{
     pointlabel/.style={
-      font=\sffamily\fontsize{6.0}{6.5}\selectfont,
+      font=\sffamily\fontsize{5.1}{5.7}\selectfont,
       text=fusiongray,
-      inner sep=0.6pt
+      inner sep=0.25pt
     },
     fusionlabel/.style={
-      font=\sffamily\bfseries\fontsize{6.0}{6.5}\selectfont,
+      font=\sffamily\bfseries\fontsize{5.6}{6.2}\selectfont,
       text=fusionink,
-      inner sep=0.6pt
+      inner sep=0.3pt
+    },
+    paretofrontier/.style={
+      draw=fusionblue,
+      dash pattern=on 3pt off 2.2pt,
+      line width=1.2pt,
+      line cap=butt
+    },
+    labelleader/.style={
+      draw=fusiongray!45,
+      line width=0.3pt,
+      line cap=round
     }
   }
   % Shared legend and direction of improvement.
-  \fill[fusionblue] (1.72,15.70) circle (2.4pt);
-  \node[anchor=west,text=fusionink] at (1.90,15.70) {Fusion models};
+  \fill[fusionblue] (3.10,19.12) circle (2.4pt);
+  \node[anchor=west,text=fusionink] at (3.28,19.12) {Fusion models};
   \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
-    (5.00,15.70) circle (2.2pt);
-  \node[anchor=west,text=fusiongray] at (5.18,15.70) {Other models};
-  \draw[fusionblue,densely dotted,line width=1.2pt]
-    (8.05,15.70) -- (8.70,15.70);
-  \node[anchor=west,text=fusionink] at (8.85,15.70)
-    {Observed Pareto frontier};
+    (6.90,19.12) circle (2.2pt);
+  \node[anchor=west,text=fusiongray] at (7.08,19.12) {Other models};
+  \draw[paretofrontier]
+    (10.18,19.12) -- (10.83,19.12);
+  \node[anchor=west,text=fusionink] at (10.98,19.12) {Pareto frontier};
 
-  % Each benchmark has a complete linear cost axis.
-  \foreach \xx/\label in {1.55/0,4.10/20,6.65/40,9.20/60,11.75/80,14.30/100} {
-    \draw[fusiongray!14] (\xx,11.45) -- (\xx,14.65);
-    \draw[fusiongray!45] (\xx,11.40) -- (\xx,11.50);
-    \node[anchor=north,text=fusiongray] at (\xx,11.36) {\$\label};
+  % GPQA uses two linear cost segments so the dense $0--40 region is legible.
+  \foreach \xx/\label in {1.55/0,3.463/10,5.375/20,7.288/30,9.20/40,
+      10.663/60,11.875/80,13.088/100,14.30/120} {
+    \draw[fusiongray!14] (\xx,14.20) -- (\xx,18.20);
+    \draw[fusiongray!45] (\xx,14.15) -- (\xx,14.25);
+    \node[anchor=north,text=fusiongray] at (\xx,14.11) {\$\label};
   }
-  \foreach \xx/\label in {1.55/100,4.10/150,6.65/200,9.20/250,11.75/300,14.30/350} {
-    \draw[fusiongray!14] (\xx,6.95) -- (\xx,10.15);
-    \draw[fusiongray!45] (\xx,6.90) -- (\xx,7.00);
-    \node[anchor=north,text=fusiongray] at (\xx,6.86) {\$\label};
+  \foreach \xx/\label in {1.55/0,3.371/50,5.193/100,7.014/150,8.836/200,10.657/250,12.479/300,14.30/350} {
+    \draw[fusiongray!14] (\xx,9.10) -- (\xx,13.10);
+    \draw[fusiongray!45] (\xx,9.05) -- (\xx,9.15);
+    \node[anchor=north,text=fusiongray] at (\xx,9.01) {\$\label};
   }
-  \foreach \xx/\label in {1.55/50,3.675/100,5.80/150,7.925/200,10.05/250,12.175/300,14.30/350} {
-    \draw[fusiongray!14] (\xx,2.45) -- (\xx,5.65);
-    \draw[fusiongray!45] (\xx,2.40) -- (\xx,2.50);
-    \node[anchor=north,text=fusiongray] at (\xx,2.36) {\$\label};
+  \foreach \xx/\label in {1.55/0,3.144/50,4.738/100,6.331/150,7.925/200,9.519/250,11.113/300,12.706/350,14.30/400} {
+    \draw[fusiongray!14] (\xx,4.00) -- (\xx,8.00);
+    \draw[fusiongray!45] (\xx,3.95) -- (\xx,4.05);
+    \node[anchor=north,text=fusiongray] at (\xx,3.91) {\$\label};
   }
 
   % Panel frames, horizontal grids, and native score ticks.
-  \draw[fusiongray!35] (1.55,11.45) rectangle (14.30,14.65);
-  \foreach \yy/\score in {11.450/91.5,11.850/92.0,12.250/92.5,12.650/93.0,13.050/93.5,13.450/94.0,13.850/94.5,14.250/95.0,14.650/95.5} {
-    \draw[fusiongray!18] (1.55,\yy) -- (14.30,\yy);
+  \draw[fusiongray!35] (1.55,14.20) rectangle (9.20,18.20);
+  \draw[fusiongray!35] (9.45,14.20) rectangle (14.30,18.20);
+  \foreach \yy/\score in {14.200/82,14.867/85,15.533/88,16.200/91,
+      16.867/94,17.533/97,18.200/100} {
+    \draw[fusiongray!18] (1.55,\yy) -- (9.20,\yy);
+    \draw[fusiongray!18] (9.45,\yy) -- (14.30,\yy);
     \node[anchor=east,text=fusiongray] at (1.42,\yy) {\score\%};
   }
-  \node[anchor=west,text=fusionink] at (1.55,14.92)
+  \draw[fusiongray!55,line width=0.55pt]
+    (9.26,14.11) -- (9.31,14.29)
+    (9.35,14.11) -- (9.40,14.29);
+  \node[anchor=west,text=fusionink] at (1.55,18.47)
     {\textbf{(a) GPQA Diamond}};
 
-  \draw[fusiongray!35] (1.55,6.95) rectangle (14.30,10.15);
-  \foreach \yy/\score in {6.950/35.0,7.407/37.5,7.864/40.0,8.321/42.5,8.779/45.0,9.236/47.5,9.693/50.0,10.150/52.5} {
+  \draw[fusiongray!35] (1.55,9.10) rectangle (14.30,13.10);
+  \foreach \yy/\score in {9.100/5,9.900/15,10.700/25,11.500/35,12.300/45,13.100/55} {
     \draw[fusiongray!18] (1.55,\yy) -- (14.30,\yy);
     \node[anchor=east,text=fusiongray] at (1.42,\yy) {\score\%};
   }
-  \node[anchor=west,text=fusionink] at (1.55,10.42)
+  \node[anchor=west,text=fusionink] at (1.55,13.37)
     {\textbf{(b) $\tau^3$-Banking}};
 
-  \draw[fusiongray!35] (1.55,2.45) rectangle (14.30,5.65);
-  \foreach \yy/\score in {2.450/78,2.907/80,3.364/82,3.821/84,4.279/86,4.736/88,5.193/90,5.650/92} {
+  \draw[fusiongray!35] (1.55,4.00) rectangle (14.30,8.00);
+  \foreach \yy/\score in {4.000/40,4.727/50,5.455/60,6.182/70,6.909/80,7.636/90,8.000/95} {
     \draw[fusiongray!18] (1.55,\yy) -- (14.30,\yy);
     \node[anchor=east,text=fusiongray] at (1.42,\yy) {\score\%};
   }
-  \node[anchor=west,text=fusionink] at (1.55,5.92)
+  \node[anchor=west,text=fusionink] at (1.55,8.27)
     {\textbf{(c) Terminal-Bench v2.1}};
 
   % GPQA Diamond frontiers.
-  \draw[fusionblue,densely dotted,line width=1.2pt,line cap=round]
-    (2.443,13.050) -- (3.208,14.170);
+  % Additional AA data are encoded as (full-run cost USD, native score):
+  % Terra (14.45, 92.53), Luna (1.96, 91.11), MiniMax-M3 (1.96, 92.93),
+  % Gemini 3.5 Flash-Lite (2.41, 83.84), Opus 4.6 (102.65, 89.60),
+  % Opus 4.8 (61.83, 92.02), Sonnet 4.6 (81.93, 87.47),
+  % DeepSeek V4 Pro 0424 (5.00, 88.79), Opus 4.7 (64.96, 91.41),
+  % Haiku 4.5 (14.83, 67.17), and GLM 5.2 (17.34, 89.49).
+  \draw[paretofrontier]
+    (1.925,16.629) -- (2.889,16.756) -- (4.036,17.067);
+  % Leader lines sit below points and text so they never obscure either.
+  \draw[labelleader] (1.925,16.629) -- (1.72,16.84);
+  \draw[labelleader] (1.925,16.224) -- (1.72,16.08);
+  \draw[labelleader] (2.889,16.756) -- (3.00,16.54);
+  \draw[fusionblue!55,line width=0.3pt] (4.036,17.067) -- (3.88,17.34);
+  \draw[labelleader] (4.314,16.540) -- (4.18,16.32);
+  \draw[labelleader] (5.758,16.898) -- (5.68,17.16);
+  \draw[labelleader] (9.753,16.556) -- (9.80,16.79);
 
+  % Other reference models.
   \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
-    (4.355,13.530) circle (2.1pt);
+    (4.993,16.689) circle (2.1pt);
   \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
-    (7.288,12.330) circle (2.1pt);
+    (9.753,16.556) circle (2.1pt);
   \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
-    (13.663,13.770) circle (2.1pt);
+    (12.784,16.956) circle (2.1pt);
   \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
-    (3.845,12.810) circle (2.1pt);
+    (4.314,16.540) circle (2.1pt);
   \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
-    (5.375,13.050) circle (2.1pt);
-  \fill[fusionblue] (3.208,14.170) circle (2.5pt);
-  \node[diamond,draw=fusionblue,fill=fusionblue,inner sep=1.45pt]
-    at (2.443,13.050) {};
+    (1.925,16.224) circle (2.1pt);
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (1.925,16.629) circle (2.1pt);
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (2.011,14.609) circle (2.1pt);
 
-  \node[fusionlabel,anchor=east] at (2.38,12.99) {Fusion Code};
-  \node[fusionlabel,anchor=west] at (3.33,14.17) {Fusion Max};
-  \node[pointlabel,anchor=east] at (3.72,12.81) {Claude Opus 5};
-  \node[pointlabel,anchor=west] at (4.48,13.53) {GPT 5.6 Sol};
-  \node[pointlabel,anchor=west] at (5.50,13.05) {Kimi K3};
-  \node[pointlabel,anchor=west] at (7.41,12.33) {Claude Fable 5};
-  \node[pointlabel,anchor=east] at (13.54,13.77) {Sakana Fugu Ultra};
+  % Additional reference models.
+  \foreach \xx/\yy in {5.758/16.898,7.288/16.764,13.248/15.889,
+      10.773/16.427,11.992/15.416,2.506/15.709,10.963/16.291,
+      4.866/15.866} {
+    \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+      (\xx,\yy) circle (2.1pt);
+  }
+  \fill[fusionblue] (4.036,17.067) circle (2.5pt);
+  \fill[fusionblue] (2.889,16.756) circle (2.5pt);
+
+  \node[pointlabel,anchor=west] at (1.64,16.88) {MiniMax-M3};
+  \node[pointlabel,anchor=west] at (1.64,16.02) {GPT 5.6 Luna};
+  \node[pointlabel,anchor=west] at (2.08,14.48) {Gemini 3.5 Flash-Lite};
+  \node[pointlabel,anchor=west] at (2.57,15.59) {DeepSeek V4 Pro};
+  \node[fusionlabel,anchor=west] at (3.00,16.50) {Fusion Code};
+  \node[fusionlabel,anchor=west] at (3.88,17.38) {Fusion Max};
+  \node[pointlabel,anchor=west] at (4.18,16.28) {GPT 5.6 Terra};
+  \node[pointlabel,anchor=west] at (4.95,15.75) {GLM 5.2};
+  \node[pointlabel,anchor=west] at (5.08,16.57) {Claude Opus 5};
+  \node[pointlabel,anchor=west] at (5.68,17.19) {GPT 5.6 Sol};
+  \node[pointlabel,anchor=west] at (7.38,16.70) {Kimi K3};
+  \node[pointlabel,anchor=west] at (9.80,16.83) {Claude Fable 5};
+  \node[pointlabel,anchor=west] at (10.86,16.54) {Claude Opus 4.8};
+  \node[pointlabel,anchor=west] at (11.05,16.16) {Claude Opus 4.7};
+  \node[pointlabel,anchor=west] at (12.08,15.30) {Claude Sonnet 4.6};
+  \node[pointlabel,anchor=west] at (12.88,17.05) {Sakana Fugu Ultra};
+  \node[pointlabel,anchor=east] at (14.18,15.65) {Claude Opus 4.6};
 
   % Tau3-Banking frontiers.
-  \draw[fusionblue,densely dotted,line width=1.2pt,line cap=round]
-    (2.672,8.961) -- (3.845,9.601);
+  % Additional AA data: Terra (60.57, 40.21), Luna (4.85, 31.13),
+  % MiniMax-M3 (7.14, 15.26), Gemini 3.5 Flash-Lite (15.65, 17.53),
+  % Opus 4.8 (214.57, 34.23), Sonnet 4.6 (82.52, 34.43),
+  % DeepSeek V4 Pro 0424 (3.74, 30.10), Opus 4.7 (216.82, 34.64),
+  % Haiku 4.5 (18.21, 9.28), and GLM 5.2 (47.93, 34.64).
+  \draw[paretofrontier]
+    (1.686,11.108) -- (1.727,11.190) -- (3.296,11.471) --
+    (3.756,11.917) -- (5.994,12.380) -- (6.832,12.660);
 
+  % Other reference models.
   \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
-    (9.251,8.651) circle (2.1pt);
+    (13.280,11.748) circle (2.1pt);
   \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
-    (12.872,7.517) circle (2.1pt);
+    (9.710,11.996) circle (2.1pt);
   \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
-    (7.874,8.084) circle (2.1pt);
+    (8.581,12.068) circle (2.1pt);
   \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
-    (6.293,8.248) circle (2.1pt);
+    (3.756,11.917) circle (2.1pt);
   \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
-    (2.672,8.961) circle (2.1pt);
-  \fill[fusionblue] (3.845,9.601) circle (2.5pt);
-  \node[diamond,draw=fusionblue,fill=fusionblue,inner sep=1.45pt]
-    at (4.559,9.419) {};
+    (1.727,11.190) circle (2.1pt);
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (1.810,9.921) circle (2.1pt);
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (2.120,10.102) circle (2.1pt);
 
-  \node[pointlabel,anchor=east] at (2.55,8.96) {Kimi K3};
-  \node[fusionlabel,anchor=south east] at (3.73,9.73) {Fusion Max};
-  \node[fusionlabel,anchor=west] at (4.69,9.42) {Fusion Code};
-  \node[pointlabel,anchor=east] at (6.17,8.25) {Claude Opus 5};
-  \node[pointlabel,anchor=west] at (7.99,8.08) {Sakana Fugu Ultra};
-  \node[pointlabel,anchor=west] at (9.37,8.65) {GPT 5.6 Sol};
-  \node[pointlabel,anchor=east] at (12.75,7.52) {Claude Fable 5};
+  % Additional reference models.
+  \foreach \xx/\yy in {10.694/12.244,5.994/12.380,9.366/11.438,
+      4.556/11.454,1.686/11.108,9.448/11.471,2.213/9.442} {
+    \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+      (\xx,\yy) circle (2.1pt);
+  }
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (3.296,11.471) circle (2.1pt);
+  \fill[fusionblue] (6.832,12.660) circle (2.5pt);
+  \fill[fusionblue] (7.342,12.580) circle (2.5pt);
+
+  \node[pointlabel,anchor=west] at (1.76,10.98) {DeepSeek V4 Pro};
+  \node[pointlabel,anchor=west] at (1.80,11.50) {GPT 5.6 Luna};
+  \node[pointlabel,anchor=west] at (1.88,9.80) {MiniMax-M3};
+  \node[pointlabel,anchor=west] at (2.19,10.20) {Gemini 3.5 Flash-Lite};
+  \node[pointlabel,anchor=west] at (2.28,9.34) {Claude 4.5 Haiku};
+  \node[pointlabel,anchor=west] at (3.36,11.34) {GLM 5.2};
+  \node[pointlabel,anchor=west] at (3.83,11.82) {GPT 5.6 Terra};
+  \node[pointlabel,anchor=west] at (4.63,11.35) {Claude Sonnet 4.6};
+  \node[pointlabel,anchor=west] at (6.06,12.29) {Kimi K3};
+  \node[fusionlabel,anchor=west] at (6.90,12.78) {Fusion Max};
+  \node[fusionlabel,anchor=west] at (7.41,12.48) {Fusion Code};
+  \node[pointlabel,anchor=west] at (8.65,12.16) {Claude Opus 5};
+  \node[pointlabel,anchor=east] at (9.28,11.28) {Claude Opus 4.8};
+  \node[pointlabel,anchor=west] at (9.54,11.58) {Claude Opus 4.7};
+  \node[pointlabel,anchor=west] at (9.78,12.06) {Sakana Fugu Ultra};
+  \node[pointlabel,anchor=west] at (10.76,12.34) {GPT 5.6 Sol};
+  \node[pointlabel,anchor=east] at (13.21,11.65) {Claude Fable 5};
 
   % Terminal-Bench frontiers.
-  \draw[fusionblue,densely dotted,line width=1.2pt,line cap=round]
-    (1.805,4.050) -- (2.443,5.170);
+  % Additional AA data: Terra (51.02, 88.01), Luna (4.71, 80.90),
+  % MiniMax-M3 (25.04, 65.17), Gemini 3.5 Flash-Lite (22.88, 53.56),
+  % Opus 4.8 (304.68, 84.64), Sonnet 4.6 (178.33, 71.16),
+  % DeepSeek V4 Pro 0424 (8.02, 64.04), Opus 4.7 (369.93, 83.15),
+  % Haiku 4.5 (62.21, 44.19), and GLM 5.2 (61.70, 77.90).
+  \draw[paretofrontier]
+    (1.700,6.975) -- (3.176,7.492) -- (3.813,7.629);
+  % Leader lines sit below points and text so they never obscure either.
+  \draw[labelleader] (1.700,6.975) -- (1.78,6.84);
+  \draw[labelleader] (3.176,7.492) -- (3.06,7.76);
+  \draw[labelleader] (3.335,7.273) -- (3.22,7.10);
+  \draw[labelleader] (3.813,7.629) -- (3.76,7.84);
+  \draw[labelleader] (3.909,7.382) -- (3.98,7.22);
+  \draw[labelleader] (4.291,7.491) -- (4.37,7.59);
 
+  % Other reference models.
   \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
-    (3.080,4.736) circle (2.1pt);
+    (11.081,7.244) circle (2.1pt);
   \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
-    (12.133,3.959) circle (2.1pt);
+    (6.140,6.895) circle (2.1pt);
   \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
-    (5.545,2.861) circle (2.1pt);
+    (8.403,7.571) circle (2.1pt);
   \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
-    (8.563,4.987) circle (2.1pt);
+    (3.176,7.492) circle (2.1pt);
   \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
-    (1.805,4.050) circle (2.1pt);
-  \fill[fusionblue] (2.570,4.393) circle (2.5pt);
-  \node[diamond,draw=fusionblue,fill=fusionblue,inner sep=1.45pt]
-    at (2.443,5.170) {};
+    (1.700,6.975) circle (2.1pt);
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (2.348,5.831) circle (2.1pt);
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (2.279,4.986) circle (2.1pt);
 
-  \node[pointlabel,anchor=west] at (1.92,3.94) {Kimi K3};
-  \node[fusionlabel,anchor=west] at (2.56,5.25) {Fusion Code};
-  \node[fusionlabel,anchor=west] at (2.69,4.31) {Fusion Max};
-  \node[pointlabel,anchor=west] at (3.20,4.74) {GPT 5.6 Sol};
-  \node[pointlabel,anchor=west] at (5.66,2.86) {Sakana Fugu Ultra};
-  \node[pointlabel,anchor=west] at (8.68,4.99) {Claude Opus 5};
-  \node[pointlabel,anchor=west] at (12.25,3.96) {Claude Fable 5};
+  % Additional reference models.
+  \foreach \xx/\yy in {4.291/7.491,3.335/7.273,11.262/7.247,
+      7.234/6.266,1.806/5.748,13.342/7.138,3.533/4.305} {
+    \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+      (\xx,\yy) circle (2.1pt);
+  }
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (3.516,6.756) circle (2.1pt);
+  \fill[fusionblue] (3.909,7.382) circle (2.5pt);
+  \fill[fusionblue] (3.813,7.629) circle (2.5pt);
 
-  \node[rotate=90,anchor=south,text=fusiongray] at (0.23,8.55)
+  \node[pointlabel,anchor=west] at (1.78,6.81) {GPT 5.6 Luna};
+  \node[pointlabel,anchor=west] at (1.87,5.60) {DeepSeek V4 Pro};
+  \node[pointlabel,anchor=west] at (2.42,5.95) {MiniMax-M3};
+  \node[pointlabel,anchor=west] at (2.35,4.89) {Gemini 3.5 Flash-Lite};
+  \node[pointlabel,anchor=east] at (3.06,7.78) {GPT 5.6 Terra};
+  \node[pointlabel,anchor=east] at (3.22,7.08) {Kimi K3};
+  \node[pointlabel,anchor=west] at (3.60,6.62) {GLM 5.2};
+  \node[pointlabel,anchor=west] at (3.60,4.21) {Claude 4.5 Haiku};
+  \node[fusionlabel,anchor=west] at (3.76,7.86) {Fusion Code};
+  \node[fusionlabel,anchor=west] at (3.98,7.20) {Fusion Max};
+  \node[pointlabel,anchor=west] at (4.37,7.61) {GPT 5.6 Sol};
+  \node[pointlabel,anchor=west] at (6.21,6.80) {Sakana Fugu Ultra};
+  \node[pointlabel,anchor=west] at (7.30,6.17) {Claude Sonnet 4.6};
+  \node[pointlabel,anchor=west] at (8.47,7.67) {Claude Opus 5};
+  \node[pointlabel,anchor=east] at (11.00,7.13) {Claude Fable 5};
+  \node[pointlabel,anchor=west] at (11.33,7.35) {Claude Opus 4.8};
+  \node[pointlabel,anchor=east] at (13.27,7.04) {Claude Opus 4.7};
+
+  \node[rotate=90,anchor=south,text=fusiongray] at (0.23,11.10)
     {Native benchmark score};
-  \node[anchor=north,text=fusiongray] at (7.93,1.65)
+  \node[anchor=north,text=fusiongray] at (7.93,3.18)
     {Full benchmark-run cost (USD)};
 \end{tikzpicture}
-\caption{Native score--cost frontiers for the three reported benchmarks. Each
-point represents a full benchmark run from Table~\ref{tab:pareto}. Every panel
-uses its native score and an independently scaled linear cost axis, so
-positions should be interpreted within, not across, panels. Dotted blue lines
-connect the observed non-dominated operating points after including Fusion;
-they are not fitted curves. Exact values are reported in Table~\ref{tab:pareto}.}
+\caption{Native score--cost frontiers for the three reported benchmarks. Blue
+points are Fusion models and hollow gray points are other models. Focal
+comparison values are reported in Table~\ref{tab:pareto}; the
+additional points use Artificial Analysis scores and full-run cost accounting
+for models released before August 2026. The GPQA cost axis is broken after
+\$40 to enlarge the dense low-cost region, and its score window begins at
+82\%; Claude 4.5 Haiku's 67.2\% GPQA result is therefore off-scale. A model is
+otherwise omitted from a panel when no corresponding result is reported.
+Dashed blue lines connect the observed non-dominated points and are not fitted
+curves.}
 \label{fig:observed-pareto}
 \end{figure}
 
