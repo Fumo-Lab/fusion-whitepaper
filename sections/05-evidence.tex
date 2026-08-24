@@ -53,94 +53,171 @@ Kimi K3 & \textbf{93.5\%} & 30 & 46.0\% & \textbf{122}
 \end{tabular}
 \end{table}
 
-Figure~\ref{fig:observed-pareto} adds a portfolio-level view of the same
-results without averaging benchmark scores. For each workload, a system's
-score is normalized by the highest score achieved by a non-Fusion reference
-system in Table~\ref{tab:pareto}; the vertical axis reports the lowest of those
-three values. This conservative capability floor prevents strength on one
-workload from concealing weakness on another.
+Figure~\ref{fig:observed-pareto} disaggregates the same results into native
+benchmark coordinates. Each panel plots reported score against full
+benchmark-run cost; no benchmark weighting or cross-benchmark normalization is
+introduced. Each panel uses a linear cost axis fitted to that benchmark's
+observed range, so equal horizontal distances represent equal cost differences
+within the panel. In every panel, the preferred direction is toward the upper
+left.
 
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[x=1cm,y=1cm,font=\sffamily\scriptsize]
-  % Plot area: total cost $180--$700; worst-case retention 80--100%.
-  \foreach \y/\label in {0.8/80,2.2/85,3.6/90,5.0/95,6.4/100} {
-    \draw[fusiongray!18] (1.2,\y) -- (14.4,\y);
-    \node[anchor=east,text=fusiongray] at (1.08,\y) {\label\%};
+  \tikzset{
+    pointlabel/.style={
+      font=\sffamily\fontsize{6.0}{6.5}\selectfont,
+      text=fusiongray,
+      inner sep=0.6pt
+    },
+    fusionlabel/.style={
+      font=\sffamily\bfseries\fontsize{6.0}{6.5}\selectfont,
+      text=fusionink,
+      inner sep=0.6pt
+    }
   }
-  \foreach \x/\label in {1.2/180,6.28/380,11.35/580,14.4/700} {
-    \draw[fusiongray!45] (\x,0.75) -- (\x,0.85);
-    \node[anchor=north,text=fusiongray] at (\x,0.67) {\$\label};
+  % Shared legend and direction of improvement.
+  \fill[fusionblue] (1.72,15.70) circle (2.4pt);
+  \node[anchor=west,text=fusionink] at (1.90,15.70) {Fusion models};
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (5.00,15.70) circle (2.2pt);
+  \node[anchor=west,text=fusiongray] at (5.18,15.70) {Other models};
+  \draw[fusionblue,densely dotted,line width=1.2pt]
+    (8.05,15.70) -- (8.70,15.70);
+  \node[anchor=west,text=fusionink] at (8.85,15.70)
+    {Observed Pareto frontier};
+
+  % Each benchmark has a complete linear cost axis.
+  \foreach \xx/\label in {1.55/0,4.10/20,6.65/40,9.20/60,11.75/80,14.30/100} {
+    \draw[fusiongray!14] (\xx,11.45) -- (\xx,14.65);
+    \draw[fusiongray!45] (\xx,11.40) -- (\xx,11.50);
+    \node[anchor=north,text=fusiongray] at (\xx,11.36) {\$\label};
   }
-  \draw[-{Stealth[length=4pt]},fusiongray!75]
-    (1.2,0.8) -- (14.65,0.8);
-  \draw[-{Stealth[length=4pt]},fusiongray!75]
-    (1.2,0.8) -- (1.2,6.45);
-  \node[anchor=north,text=fusiongray] at (7.8,0.12)
-    {Total cost of three complete benchmark runs (USD)};
-  \node[rotate=90,anchor=south,text=fusiongray] at (0.18,3.6)
-    {Worst-case performance retention vs.\ best reference};
-  % Reference-only and combined observed frontiers.
-  \draw[fusiongray,dashed,line width=0.85pt]
-    (1.91,5.11) -- (5.74,5.37);
-  \draw[fusionblue,line width=1.45pt,line cap=round,line join=round]
-    (1.91,5.11) -- (2.52,5.58) -- (2.65,6.22);
+  \foreach \xx/\label in {1.55/100,4.10/150,6.65/200,9.20/250,11.75/300,14.30/350} {
+    \draw[fusiongray!14] (\xx,6.95) -- (\xx,10.15);
+    \draw[fusiongray!45] (\xx,6.90) -- (\xx,7.00);
+    \node[anchor=north,text=fusiongray] at (\xx,6.86) {\$\label};
+  }
+  \foreach \xx/\label in {1.55/50,3.675/100,5.80/150,7.925/200,10.05/250,12.175/300,14.30/350} {
+    \draw[fusiongray!14] (\xx,2.45) -- (\xx,5.65);
+    \draw[fusiongray!45] (\xx,2.40) -- (\xx,2.50);
+    \node[anchor=north,text=fusiongray] at (\xx,2.36) {\$\label};
+  }
 
-  % Reference systems.
-  \filldraw[fill=white,draw=fusiongray,line width=0.75pt]
-    (1.91,5.11) circle (2.3pt);
-  \filldraw[fill=white,draw=fusiongray,line width=0.75pt]
-    (5.74,5.37) circle (2.3pt);
-  \filldraw[fill=white,draw=fusiongray,line width=0.75pt]
-    (7.44,4.03) circle (2.3pt);
-  \filldraw[fill=white,draw=fusiongray,line width=0.75pt]
-    (13.54,1.59) circle (2.3pt);
-  \filldraw[fill=white,draw=fusiongray,line width=0.75pt]
-    (8.37,3.47) circle (2.3pt);
+  % Panel frames, horizontal grids, and native score ticks.
+  \draw[fusiongray!35] (1.55,11.45) rectangle (14.30,14.65);
+  \foreach \yy/\score in {11.450/91.5,11.850/92.0,12.250/92.5,12.650/93.0,13.050/93.5,13.450/94.0,13.850/94.5,14.250/95.0,14.650/95.5} {
+    \draw[fusiongray!18] (1.55,\yy) -- (14.30,\yy);
+    \node[anchor=east,text=fusiongray] at (1.42,\yy) {\score\%};
+  }
+  \node[anchor=west,text=fusionink] at (1.55,14.92)
+    {\textbf{(a) GPQA Diamond}};
 
-  % Fusion systems.
-  \fill[fusionblue] (2.52,5.58) circle (2.8pt);
-  \node[diamond,draw=fusionblue,fill=fusionblue,inner sep=1.75pt]
-    at (2.65,6.22) {};
+  \draw[fusiongray!35] (1.55,6.95) rectangle (14.30,10.15);
+  \foreach \yy/\score in {6.950/35.0,7.407/37.5,7.864/40.0,8.321/42.5,8.779/45.0,9.236/47.5,9.693/50.0,10.150/52.5} {
+    \draw[fusiongray!18] (1.55,\yy) -- (14.30,\yy);
+    \node[anchor=east,text=fusiongray] at (1.42,\yy) {\score\%};
+  }
+  \node[anchor=west,text=fusionink] at (1.55,10.42)
+    {\textbf{(b) $\tau^3$-Banking}};
 
-  % Point labels.
-  \node[anchor=west,align=left,text=fusiongray] at (2.05,4.75)
-    {Kimi K3\\95.40\% $\cdot$ \$208};
-  \node[anchor=west,align=left,text=fusiongray] at (5.91,5.36)
-    {GPT 5.6 Sol\\96.30\% $\cdot$ \$359};
-  \draw[fusiongray!45] (7.44,4.03) -- (7.12,4.22);
-  \node[anchor=east,align=right,text=fusiongray] at (7.02,4.25)
-    {Claude Opus 5\\91.52\% $\cdot$ \$426};
-  \node[anchor=east,align=right,text=fusiongray] at (13.35,1.89)
-    {Claude Fable 5\\82.83\% $\cdot$ \$666};
-  \draw[fusiongray!45] (8.37,3.47) -- (8.67,3.24);
-  \node[anchor=west,align=left,text=fusiongray] at (8.77,3.20)
-    {Sakana Fugu Ultra\\89.53\% $\cdot$ \$462};
+  \draw[fusiongray!35] (1.55,2.45) rectangle (14.30,5.65);
+  \foreach \yy/\score in {2.450/78,2.907/80,3.364/82,3.821/84,4.279/86,4.736/88,5.193/90,5.650/92} {
+    \draw[fusiongray!18] (1.55,\yy) -- (14.30,\yy);
+    \node[anchor=east,text=fusiongray] at (1.42,\yy) {\score\%};
+  }
+  \node[anchor=west,text=fusionink] at (1.55,5.92)
+    {\textbf{(c) Terminal-Bench v2.1}};
 
-  \draw[fusiongray!55] (2.52,5.58) -- (3.42,5.70);
-  \node[anchor=west,align=left,text=fusionink] at (3.55,5.68)
-    {\textbf{Fusion Max}\\97.08\% $\cdot$ \$232};
-  \draw[fusiongray!55] (2.65,6.22) -- (3.25,6.30);
-  \node[anchor=west,align=left,text=fusionink] at (3.34,6.25)
-    {\textbf{Fusion Code}\\99.06\% $\cdot$ \$237};
+  % GPQA Diamond frontiers.
+  \draw[fusionblue,densely dotted,line width=1.2pt,line cap=round]
+    (2.443,13.050) -- (3.208,14.170);
 
-  % Frontier labels and one directly auditable comparison.
-  \draw[fusionblue,line width=1.25pt] (9.15,6.18) -- (9.75,6.18);
-  \node[anchor=west,text=fusionink] at (9.90,6.18)
-    {\textbf{Observed frontier with Fusion}};
-  \draw[fusiongray,dashed,line width=0.85pt]
-    (9.15,5.88) -- (9.75,5.88);
-  \node[anchor=west,text=fusiongray] at (9.90,5.88)
-    {Reference-only frontier};
-  \node[anchor=east,text=fusiongray] at (14.35,1.02)
-    {Dominated operating points};
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (4.355,13.530) circle (2.1pt);
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (7.288,12.330) circle (2.1pt);
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (13.663,13.770) circle (2.1pt);
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (3.845,12.810) circle (2.1pt);
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (5.375,13.050) circle (2.1pt);
+  \fill[fusionblue] (3.208,14.170) circle (2.5pt);
+  \node[diamond,draw=fusionblue,fill=fusionblue,inner sep=1.45pt]
+    at (2.443,13.050) {};
+
+  \node[fusionlabel,anchor=east] at (2.38,12.99) {Fusion Code};
+  \node[fusionlabel,anchor=west] at (3.33,14.17) {Fusion Max};
+  \node[pointlabel,anchor=east] at (3.72,12.81) {Claude Opus 5};
+  \node[pointlabel,anchor=west] at (4.48,13.53) {GPT 5.6 Sol};
+  \node[pointlabel,anchor=west] at (5.50,13.05) {Kimi K3};
+  \node[pointlabel,anchor=west] at (7.41,12.33) {Claude Fable 5};
+  \node[pointlabel,anchor=east] at (13.54,13.77) {Sakana Fugu Ultra};
+
+  % Tau3-Banking frontiers.
+  \draw[fusionblue,densely dotted,line width=1.2pt,line cap=round]
+    (2.672,8.961) -- (3.845,9.601);
+
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (9.251,8.651) circle (2.1pt);
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (12.872,7.517) circle (2.1pt);
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (7.874,8.084) circle (2.1pt);
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (6.293,8.248) circle (2.1pt);
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (2.672,8.961) circle (2.1pt);
+  \fill[fusionblue] (3.845,9.601) circle (2.5pt);
+  \node[diamond,draw=fusionblue,fill=fusionblue,inner sep=1.45pt]
+    at (4.559,9.419) {};
+
+  \node[pointlabel,anchor=east] at (2.55,8.96) {Kimi K3};
+  \node[fusionlabel,anchor=south east] at (3.73,9.73) {Fusion Max};
+  \node[fusionlabel,anchor=west] at (4.69,9.42) {Fusion Code};
+  \node[pointlabel,anchor=east] at (6.17,8.25) {Claude Opus 5};
+  \node[pointlabel,anchor=west] at (7.99,8.08) {Sakana Fugu Ultra};
+  \node[pointlabel,anchor=west] at (9.37,8.65) {GPT 5.6 Sol};
+  \node[pointlabel,anchor=east] at (12.75,7.52) {Claude Fable 5};
+
+  % Terminal-Bench frontiers.
+  \draw[fusionblue,densely dotted,line width=1.2pt,line cap=round]
+    (1.805,4.050) -- (2.443,5.170);
+
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (3.080,4.736) circle (2.1pt);
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (12.133,3.959) circle (2.1pt);
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (5.545,2.861) circle (2.1pt);
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (8.563,4.987) circle (2.1pt);
+  \filldraw[fill=white,draw=fusiongray,line width=0.7pt]
+    (1.805,4.050) circle (2.1pt);
+  \fill[fusionblue] (2.570,4.393) circle (2.5pt);
+  \node[diamond,draw=fusionblue,fill=fusionblue,inner sep=1.45pt]
+    at (2.443,5.170) {};
+
+  \node[pointlabel,anchor=west] at (1.92,3.94) {Kimi K3};
+  \node[fusionlabel,anchor=west] at (2.56,5.25) {Fusion Code};
+  \node[fusionlabel,anchor=west] at (2.69,4.31) {Fusion Max};
+  \node[pointlabel,anchor=west] at (3.20,4.74) {GPT 5.6 Sol};
+  \node[pointlabel,anchor=west] at (5.66,2.86) {Sakana Fugu Ultra};
+  \node[pointlabel,anchor=west] at (8.68,4.99) {Claude Opus 5};
+  \node[pointlabel,anchor=west] at (12.25,3.96) {Claude Fable 5};
+
+  \node[rotate=90,anchor=south,text=fusiongray] at (0.23,8.55)
+    {Native benchmark score};
+  \node[anchor=north,text=fusiongray] at (7.93,1.65)
+    {Full benchmark-run cost (USD)};
 \end{tikzpicture}
-\caption{Observed cost--capability-floor frontier. Worst-case performance
-retention is the minimum, across GPQA Diamond, $\tau^3$-Banking, and
-Terminal-Bench v2.1, of a system's score divided by the highest score achieved
-by a reported non-Fusion reference system on that benchmark. Cost is the sum
-of the three full benchmark-run costs before rounding. Lines connect observed
-non-dominated operating points rather than fitted curves.}
+\caption{Native score--cost frontiers for the three reported benchmarks. Each
+point represents a full benchmark run from Table~\ref{tab:pareto}. Every panel
+uses its native score and an independently scaled linear cost axis, so
+positions should be interpreted within, not across, panels. Dotted blue lines
+connect the observed non-dominated operating points after including Fusion;
+they are not fitted curves. Exact values are reported in Table~\ref{tab:pareto}.}
 \label{fig:observed-pareto}
 \end{figure}
 
