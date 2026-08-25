@@ -4,6 +4,8 @@
 
 **Fumo Lab Technical Whitepaper · Revision 0.1 · August 2026**
 
+[Download the whitepaper (PDF)](Fusion-Whitepaper-Rev-0.1.pdf)
+
 Agentic systems do their work over time. Each search result, tool call, failed
 attempt, or user clarification changes the task state and may change what kind
 of intelligence is useful next. The available models also offer very different

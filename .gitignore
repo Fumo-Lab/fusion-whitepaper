@@ -11,6 +11,7 @@ build/
 *.log
 *.out
 *.pdf
+!Fusion-Whitepaper-Rev-0.1.pdf
 *.run.xml
 *.synctex.gz
 *.toc
